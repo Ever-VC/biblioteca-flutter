@@ -7,7 +7,7 @@ class SqliteDatabase {
   String dbName = 'library.db';
 
   factory SqliteDatabase() => _inatance;
-  
+
   SqliteDatabase._internal();
 
   Future<Database> get database async {
@@ -15,13 +15,13 @@ class SqliteDatabase {
     _database = await _initDatabase();
     return _database!;
   }
-  
+
   Future<Database> _initDatabase() async {
     String src = await getDatabasesPath();
     String path = join(src, dbName);
     return openDatabase(path, version: 1, onCreate: _onCreateDB);
   }
-  
+
   Future<void> _onCreateDB(Database db, int version) async {
     await db.execute('''
       CREATE TABLE author (
@@ -36,7 +36,7 @@ class SqliteDatabase {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         publicationYear TEXT NOT NULL,
-        id_author INTEGER NOT NOULL,
+        id_author INTEGER NOT NULL,
         FOREIGN KEY (id_author) REFERENCES author(id) ON DELETE CASCADE
       )
     ''');
